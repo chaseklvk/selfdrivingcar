@@ -15,7 +15,8 @@ int SIDE = -1;             // 1 = Left Side, 0 = Right Side
 int THRESHOLD = 15;
 int FINAL_THRESHOLD = 20;
 int PARK_TURN_SPEED = 250;
-int PARK_TIME_DELAY = 500;
+int PARK_TIME_DELAY_LEFT = 300;
+int PARK_TIME_DELAY_RIGHT = 330;
 int FRONT_DETECTION_DISTANCE = 10;
 int FORWARD_SPEED_AFTER_TURN = 75;
 int FORWARD_CORRECTION_DELAY = 100;
@@ -34,6 +35,9 @@ bool parked = false;
 
 // Parallel park?
 bool parallel = false;
+
+int lastRefresh = 0;
+int REFRESH_TIME = 3000;
 
 void setup() {
   Serial.begin(9600);
@@ -61,10 +65,19 @@ void loop() {
   // Check if we're parked, if so return from func
   if (parked) {
     stopMotors();
+    setServoFront();
+    
+    // Correct distance
+    if (millis() - lastRefresh >= REFRESH_TIME) {
+      lastRefresh = millis();
+      leftLightOff();
+      rightLightOff();
+      while(1);
+    }
     
     leftLightSteady();
     rightLightSteady();
-    delay(100);
+    delay(50);
     leftLightOff();
     rightLightOff();
   }
@@ -75,13 +88,6 @@ void loop() {
    */
   if (!isParking) {
     // Code for normal operation
-
-
-    // Correct distance
-    //if (millis() - lastRefresh >= REFRESH_TIME) {
-      //lastRefresh = millis();
-      //correctDistance();
-    //}
       
       detectFrontObstacle();
       searchForSpot();

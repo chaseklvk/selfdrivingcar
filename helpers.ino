@@ -227,7 +227,7 @@ void parkLeftSide() {
     moveForward(100);
     delay(FORWARD_CORRECTION_DELAY);
     moveLeft(PARK_TURN_SPEED);
-    delay(PARK_TIME_DELAY);
+    delay(PARK_TIME_DELAY_LEFT);
     stopMotors();
   }
 
@@ -255,7 +255,7 @@ void parkRightSide() {
     moveForward(100);
     delay(FORWARD_CORRECTION_DELAY);
     moveRight(PARK_TURN_SPEED);
-    delay(PARK_TIME_DELAY);
+    delay(PARK_TIME_DELAY_RIGHT);
     stopMotors();
   }
 
@@ -284,12 +284,12 @@ void finalCheckRight() {
 
   if (leftDistance > FINAL_THRESHOLD) {
     moveLeft(PARK_TURN_SPEED);
-    delay(PARK_TIME_DELAY);
+    delay(PARK_TIME_DELAY_LEFT);
     stopMotors();
 
     int distanceFront = measureDistanceFront(true);
 
-    if (distanceFront > 400) {
+    if (distanceFront > 50) {
       // back to drive mode
 
       firstTurn = false;
@@ -316,7 +316,7 @@ void finalCheckLeft() {
 
   if (rightDistance > FINAL_THRESHOLD) {
     moveRight(PARK_TURN_SPEED);
-    delay(PARK_TIME_DELAY);
+    delay(PARK_TIME_DELAY_RIGHT);
     stopMotors();
 
     int distanceFront = measureDistanceFront(true);
