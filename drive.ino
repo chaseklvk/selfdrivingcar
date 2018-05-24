@@ -1,5 +1,5 @@
 /* 
- * All controls for DC motors
+ * Initialization and controls for DC Motors
  */
 
 // Define Pins
@@ -10,7 +10,11 @@
 #define IN3 9
 #define IN4 11
 
-// Initialize motors
+/* initMotors()
+ * 
+ * Set the pinMode for the appropriate pins defined above.
+ * 
+ */
 void initMotors() {
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -20,7 +24,11 @@ void initMotors() {
   pinMode(ENB, OUTPUT);
 }
 
-// Move car forward
+/* moveForward(int i)
+ * 
+ * Move the car forward. Takes an integer value to set the speed.
+ * 
+ */
 void moveForward(int i) {
   setSpeed(i);
   digitalWrite(IN1, HIGH);            // Set IN1 high
@@ -28,11 +36,16 @@ void moveForward(int i) {
   digitalWrite(IN3, LOW);             // Set IN3 low
   digitalWrite(IN4, HIGH);            // Set IN4 high
 
-  // Lights
+  // Moving forward, no turn signal required
   leftLightOff();
   rightLightOff();
 }
 
+/* moveBack(int i)
+ * 
+ * Move the car backward. Takes an integer value to set the speed.
+ * 
+ */
 void moveBack(int i) {
   setSpeed(i);
   digitalWrite(IN1, LOW);
@@ -40,10 +53,17 @@ void moveBack(int i) {
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
 
+
+  // Moving backward, no turn signal required
   leftLightOff();
   rightLightOff();
 }
 
+/* moveLeft(int i)
+ * 
+ * Move the car to the left. Takes an integer value to set the speed.
+ * 
+ */
 void moveLeft(int i) {
   setSpeed(i);
   digitalWrite(IN1, LOW);
@@ -51,9 +71,15 @@ void moveLeft(int i) {
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
 
+  // Left turn signal
   leftLightSteady();
 }
 
+/* moveRight(int i)
+ * 
+ * Move the car to the right. Takes an integer value to set the speed.
+ * 
+ */
 void moveRight(int i) {
   setSpeed(i);
   digitalWrite(IN1, HIGH);
@@ -61,9 +87,16 @@ void moveRight(int i) {
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
 
+
+  // Right turn signal
   rightLightSteady();
 }
 
+/* stopMotors()
+ * 
+ * Stop the car.
+ * 
+ */
 void stopMotors() {
   digitalWrite(ENB, LOW);
   digitalWrite(ENA, LOW);
@@ -72,6 +105,11 @@ void stopMotors() {
   rightLightOff();
 }
 
+/* setSpeed(int i)
+ * 
+ * Set the speed of the motors. Takes an integer value for the speed. 
+ * Used here as more of a private method not meant to be accessed directly. 
+ */
 void setSpeed(int i) {
   analogWrite(ENB, i);
   analogWrite(ENA, i);

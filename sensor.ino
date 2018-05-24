@@ -1,7 +1,8 @@
 /*
- * All controls of ultrasonic sensor
+ * Initialization and controls for ultrasonic sensors
  */
 
+// Define the pins we'll use
  #define ECHO_LEFT A1
  #define TRIG_LEFT A0
  #define ECHO_RIGHT A3
@@ -9,6 +10,11 @@
  #define TRIG_FRONT A5
  #define ECHO_FRONT A4
 
+/* initSensors()
+ * 
+ * Set the appropriate pins for ouput
+ * 
+ */
  void initSensors() {
   pinMode(ECHO_LEFT, INPUT);
   pinMode(TRIG_LEFT, OUTPUT);
@@ -18,6 +24,12 @@
   pinMode(ECHO_FRONT, INPUT);
 }
 
+
+/* measureDistanceLeft()
+ * 
+ * Measure the distance of the left side sensor
+ * 
+ */
 int measureDistanceLeft() {
   
   digitalWrite(TRIG_LEFT, LOW);
@@ -32,7 +44,11 @@ int measureDistanceLeft() {
   return (int)Fdistance;
 }
 
-
+/* measureDistanceRight()
+ * 
+ * Measure the distance of the right side sensor
+ * 
+ */
 int measureDistanceRight() {
   
   digitalWrite(TRIG_RIGHT, LOW);
@@ -47,7 +63,11 @@ int measureDistanceRight() {
   return (int)Fdistance;
 }
 
-
+/* measureDistanceFront()
+ * 
+ * Measure the distance of the front sensor
+ * 
+ */
 int measureDistanceFront(bool scanDelay) {
   if (scanDelay) delay(2000);
   
